@@ -34,7 +34,7 @@ TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-gb'
 
 SITE_ID = 1
 
@@ -96,7 +96,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'statuses.middlewares.TimezoneMiddleware',
 )
 
 ROOT_URLCONF = 'twitz.urls'
@@ -146,3 +145,5 @@ LOGGING = {
         },
     }
 }
+
+DATETIME_FORMAT = 'fasdfasd'

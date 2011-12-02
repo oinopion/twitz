@@ -1,10 +1,14 @@
-!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}
+    Error!
+{% endblock %}
+
+
+{% block content %}
+    <h1>Sorry, we've got an error!</h1>
+    <p>
+        Author failed to make this site in proper manner and thus server cannot
+        continue. You may visit the <a href="{% url homepage %}">home page</a>.
+    </p>
+{% endblock %}

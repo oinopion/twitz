@@ -1,10 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}
+    Page not found!
+{% endblock %}
+
+
+{% block content %}
+    <h1>Sorry, not found!</h1>
+    <p>
+        Page you were looking for was not found. Please, take a look at
+        our <a href="{% url homepage %}">home page</a>.
+    </p>
+{% endblock %}
