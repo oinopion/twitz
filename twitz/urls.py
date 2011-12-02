@@ -9,5 +9,6 @@ homepage = TemplateView.as_view(template_name='homepage.html')
 
 urlpatterns = patterns('',
     url(r'^$', homepage, name='homepage'),
+    url(r'^settings/', 'accounts.views.settings', name='settings'),
     url(r'^admin/', include(admin.site.urls)),
 )
