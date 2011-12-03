@@ -107,6 +107,12 @@ class TimeZoneMiddlewareTest(TestCase):
         self.middleware.process_request(req)
         self.assertEqual(get_default_timezone(), get_current_timezone())
 
+    def test_works_with_bad_time_zone(self):
+        req = self.request_with_time_zone('NON_TIME_ZONE_STRING')
+        self.middleware.process_request(req)
+        self.assertEqual(get_default_timezone(), get_current_timezone())
+
+
     def request_with_time_zone(self, time_zone):
         req = RequestFactory().request()
         req.user = User.objects.create_user("josh")
