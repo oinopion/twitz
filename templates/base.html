@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load url from future %}
 <html>
 <head>
     <title>Twitz</title>
@@ -13,9 +14,25 @@
     <div class="fill">
         <div class="container">
             <a class="brand" href="/">Twitz</a>
-            {#            <ul class="nav">#}
-            {#                <li><a href="{% url homepage %}">Home</a></li>#}
-            {#            </ul>#}
+            <ul class="nav">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'settings' %}">Settings</a></li>
+                {% endif %}
+            </ul>
+
+            {% if user.is_anonymous %}
+                <form class="nav pull-right" method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <input class="input-small" name="username" placeholder="username"/>
+                    <input class="input-small" name="password" placeholder="password" type="password"/>
+                    <button class="btn" type="submit">Log in</button>
+                </form>
+            {% else %}
+                <form class="nav pull-right" method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="btn" type="submit">Log out</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -24,7 +41,7 @@
 
     <div class="content">
         <div class="page-header">
-            <h1>{% block title %}a{% endblock %}</h1>
+            <h1>{% block title %}Twitz{% endblock %}</h1>
         </div>
         <div class="row">
             <div class="span10">

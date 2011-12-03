@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
+{% load url from future %}
 
 {% block title %}
     Settings
+{% endblock %}
+
+
+{% block content %}
+    <form class="settings" method="POST" action="{% url 'settings' %}">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Profile</legend>
+            {% for field in form.visible_fields %}
+                <div class="clearfix">
+                    {{ field.label_tag }}
+                    <div class="input">{{ field }}</div>
+                </div>
+            {% endfor %}
+        </fieldset>
+
+        <div class="actions">
+            <button type="submit" class="btn primary">Save</button>
+            <a href="{% url 'homepage' %}" class="btn">Go Back</a>
+        </div>
+    </form>
 {% endblock %}

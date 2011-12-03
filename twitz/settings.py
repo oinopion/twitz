@@ -118,7 +118,11 @@ INSTALLED_APPS = (
     'accounts',
 )
 
+# Users settings
 AUTH_PROFILE_MODULE = 'accounts.Profile'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL ='/'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
