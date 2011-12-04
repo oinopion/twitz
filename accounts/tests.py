@@ -1,6 +1,7 @@
 # encoding: utf-8
 from django import forms
 from django.contrib.auth.models import AnonymousUser
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.timezone import get_default_timezone, get_current_timezone, deactivate, get_current_timezone_name
@@ -22,6 +23,16 @@ class ProfileModelTest(TestCase):
         profile = User.objects.create_user("luke").profile
         profile.user.delete()
         self.assertFalse(Profile.objects.filter(pk=profile.pk).exists())
+
+    def test_profile_time_zone_validation(self):
+        profile = Profile()
+        profile.time_zone = "adsfasdf"
+        try:
+            profile.full_clean()
+        except ValidationError, e:
+            self.assertIn('time_zone', e.message_dict)
+        else:
+            self.fail("Should raise validation error")
 
 
 class SettingsViewTest(TestCase):
