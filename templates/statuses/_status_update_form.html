@@ -1,0 +1,17 @@
+{% load widget_tweaks %}
+{% load url from future %}
+
+<h2>What's up?</h2>
+<form class="status-form form-stacked" action="{% url 'status_update' %}" method="POST">
+    {% csrf_token %}
+    <div class="clearfix{% if form.text.errors %} error{% endif%}">
+        {{ form.text.label_tag }}
+        <div class="input">
+            <span class="help-block">{{ form.text.errors|join:", " }}</span>
+            {{ form.text|add_class:"span9"|attr:"rows:2" }}
+        </div>
+    </div>
+    <div class="clearfix">
+        <button class="btn primary" type="submit">Update</button>
+    </div>
+</form>

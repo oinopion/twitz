@@ -6,6 +6,11 @@ from django.test import TestCase
 from statuses.forms import StatusForm
 from statuses.models import Status
 
+class LoginViewMixin(object):
+    def login(self):
+        self.user = User.objects.create_user("jill", password="jill")
+        self.client.login(username="jill", password="jill")
+
 
 class StatusModelTest(TestCase):
     def test_requires_author_and_text(self):
@@ -32,12 +37,16 @@ class StatusModelTest(TestCase):
         self.assertEqual(20, q.query.high_mark)
 
 
-class TimelineView(TestCase):
+class TimelineView(TestCase, LoginViewMixin):
     def test_renders_template(self):
         self.assertTemplateUsed(self.get(), 'statuses/timeline.html')
 
     def test_gives_statuses_to_template(self):
         self.assertIn("statuses", self.get().context)
+
+    def test_uses_good_queryset(self):
+        sql = str(self.get().context['statuses'].query)
+        self.assertEqual(str(Status.objects.timeline().query), sql)
 
     def test_gives_form_to_template(self):
         self.assertIn("status_form", self.get().context)
@@ -49,8 +58,41 @@ class TimelineView(TestCase):
         for status in statuses:
             self.assertContains(resp, status.text)
 
+    def test_renders_form_when_logged_in(self):
+        self.login()
+        self.assertContains(self.get(), '<form class="status-form')
+
+    def test_does_not_render_form_when_not_logged_in(self):
+        self.assertNotContains(self.get(), '<form class="status-form')
+
+
     def get(self):
         return self.client.get('/')
+
+
+class StatusUpdateView(TestCase, LoginViewMixin):
+    def test_requires_login(self):
+        resp = self.client.get('/update/')
+        self.assertRedirects(resp, '/login/?next=/update/')
+
+    def test_redirects(self):
+        self.assertRedirects(self.post(text="Hello"), '/')
+
+    def test_creates_status(self):
+        self.post(text="Hello")
+        self.assertTrue(self.user.status_set.exists())
+
+    def test_renders_template(self):
+        self.assertTemplateUsed(self.get(), 'statuses/status_form.html')
+
+    def post(self, **kwargs):
+        self.login()
+        return self.client.post('/update/', kwargs)
+
+    def get(self):
+        self.login()
+        return self.client.get('/update/')
+
 
 
 class StatusFormTest(TestCase):
@@ -58,10 +100,15 @@ class StatusFormTest(TestCase):
         f = StatusForm({'text': 'What is your quest?'})
         self.assertTrue(f.is_valid())
 
+    def test_is_not_valid_with_too_long_text(self):
+        f = StatusForm({'text': 'a' * 257})
+        self.assertFalse(f.is_valid())
+
+
     def test_sets_correct_author(self):
-        u = User.objects.create_user("jack")
         f = StatusForm({'text': 'What is your quest?'})
-        self.assertEqual(u, f.save(author=u).author)
+        f.author = User.objects.create_user("jack")
+        self.assertEqual(f.author, f.save().author)
 
     def test_unbound_instance(self):
         self.assertFalse(StatusForm().is_bound)

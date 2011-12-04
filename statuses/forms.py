@@ -7,7 +7,7 @@ class StatusForm(forms.ModelForm):
         model = Status
         fields = ('text', )
 
-    def save(self, author, commit=True):
-        if not self.instance.pk:
-            self.instance.author = author
+    def save(self, commit=True):
+        if not self.instance.pk and getattr(self, 'author'):
+            self.instance.author = self.author
         return super(StatusForm, self).save(commit)
