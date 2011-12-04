@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
 from accounts.forms import SettingsForm
 
 class SettingsView(UpdateView):

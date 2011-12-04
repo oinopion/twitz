@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load url from future %}
 
 {% block title %}
     Hello!
@@ -11,7 +12,8 @@
             <li class="status" data-isodate="{{ status.pub_date|date:"c" }}">
                 <blockquote>
                     <p>{{ status.text }}</p>
-                    <small>tweeted by <strong>{{ status.author }}</strong> on
+                    <small>tweeted by <strong><a href="{{ status.author.get_absolute_url }}"
+                        >{{ status.author }}</a></strong> on
                         <strong>{{ status.pub_date }}</strong></small>
                 </blockquote>
             </li>

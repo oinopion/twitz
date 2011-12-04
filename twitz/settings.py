@@ -96,8 +96,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'accounts.middlewares.TimeZoneMiddleware',
-)
+    )
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'twitz.urls'
 
@@ -117,6 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'widget_tweaks',
+    'debug_toolbar',
     'accounts',
     'statuses',
 )
@@ -145,6 +149,10 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler'
         }
     },
     'loggers': {
@@ -152,6 +160,9 @@ LOGGING = {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        '': {
+            'handlers': ['console'],
         },
     }
 }

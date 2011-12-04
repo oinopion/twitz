@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block title %}
+    User: {{ user.username }}{% if same_user %}
+    <small>(you!)</small>{% endif %}
+{% endblock %}
+
+{% block content %}
+    {% with tz=observed_user.profile.time_zone|default:"UTC" %}
+        <h2>Timeline</h2>
+        <ul class="unstyled">
+            {% for status in statuses %}
+                <li class="status" data-isodate="{{ status.pub_date|date:"c" }}">
+                    <blockquote>
+                        <p>{{ status.text }}</p>
+                        <small>tweeted by <strong>{{ status.author }}</strong>
+                            on
+                            <strong>{{ status.pub_date }}</strong>
+                            {% if not same_user %}
+                                (it was
+                                <strong>{{ status.pub_date|timezone:tz }}</strong>
+                                for the author)
+                            {% endif %}
+                        </small>
+                    </blockquote>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endwith %}
+{% endblock %}
+
+{% block secondary_content %}
+    {{ block.super }}
+    {% if not same_user %}
+        <hr>
+        <p>{{ observed_user.username }} current time:<br>
+            {% timezone observed_user.profile.time_zone|default:"UTC" %}
+                <strong>{% now "r" %}</strong>
+            {% endtimezone %}
+
+        </p>
+        <p>{{ observed_user.username }} current time zone:<br>
+            <strong>{{ observed_user.profile.time_zone|default:"UTC" }}</strong>
+        </p>
+    {% endif %}
+{% endblock %}

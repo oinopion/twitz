@@ -1,6 +1,6 @@
 # encoding: utf-8
-from django import forms
 import django
+from django import forms
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -103,7 +103,7 @@ class TimeZoneMiddlewareTest(TestCase):
         deactivate() # clean up after other tests
 
     def tearDown(self):
-        deactivate() 
+        deactivate()
 
     def test_does_noet_set_tz_if_no_user(self):
         req = self.anonymous_request()

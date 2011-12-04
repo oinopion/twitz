@@ -65,9 +65,23 @@ class TimelineView(TestCase, LoginViewMixin):
     def test_does_not_render_form_when_not_logged_in(self):
         self.assertNotContains(self.get(), '<form class="status-form')
 
-
     def get(self):
         return self.client.get('/')
+
+
+class UserViewTest(TestCase):
+    def test_get(self):
+        self.assertTemplateUsed(self.get(), 'statuses/user.html')
+
+    def test_template_gets_user(self):
+        self.assertIn('observed_user', self.get().context)
+
+    def test_template_gets_statuses(self):
+        self.assertIn('statuses', self.get().context)
+
+    def get(self):
+        u = User.objects.create_user('mike')
+        return self.client.get(u.get_absolute_url())
 
 
 class StatusUpdateView(TestCase, LoginViewMixin):

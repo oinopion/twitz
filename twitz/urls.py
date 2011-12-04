@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'statuses.views.timeline', name='timeline'),
     url(r'^update/$', 'statuses.views.status_update', name='status_update'),
+    url(r'^users/(?P<username>\w+)/$', 'statuses.views.user', name='user'),
     url(r'^settings/$', 'accounts.views.settings', name='settings'),
     url(r'^admin/', include(admin.site.urls)),
 )

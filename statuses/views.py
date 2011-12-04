@@ -1,5 +1,6 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.decorators import login_required
 
 from statuses.forms import StatusForm
@@ -28,5 +29,21 @@ class StatusUpdateView(CreateView):
         return reverse('timeline')
 
 
+class UserView(DetailView):
+    model = User
+    context_object_name = 'observed_user'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    template_name = 'statuses/user.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserView, self).get_context_data(**kwargs)
+        user = self.object
+        context['statuses'] = user.status_set.timeline()[:20]
+        context['same_user'] = user == self.request.user
+        return context
+
+
 timeline = TimelineView.as_view()
 status_update = login_required(StatusUpdateView.as_view())
+user = UserView.as_view()
