@@ -1,5 +1,6 @@
 # encoding: utf-8
 from django import forms
+import django
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -99,9 +100,10 @@ class SettingsFormTest(TestCase):
 class TimeZoneMiddlewareTest(TestCase):
     def setUp(self):
         self.middleware = TimeZoneMiddleware()
+        deactivate() # clean up after other tests
 
     def tearDown(self):
-        deactivate()
+        deactivate() 
 
     def test_does_noet_set_tz_if_no_user(self):
         req = self.anonymous_request()
@@ -123,6 +125,9 @@ class TimeZoneMiddlewareTest(TestCase):
         self.middleware.process_request(req)
         self.assertEqual(get_default_timezone(), get_current_timezone())
 
+    def test_is_configured(self):
+        middlewares = django.conf.settings.MIDDLEWARE_CLASSES
+        self.assertIn('accounts.middlewares.TimeZoneMiddleware', middlewares)
 
     def request_with_time_zone(self, time_zone):
         req = RequestFactory().request()
