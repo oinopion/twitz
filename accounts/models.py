@@ -1,15 +1,16 @@
-from django.core.exceptions import ValidationError
 import pytz
 from django.db import models
-from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 TIME_ZONE_CHOICES = zip(pytz.common_timezones, pytz.common_timezones)
 
 def validate_time_zone(time_zone):
     if time_zone not in pytz.common_timezones:
         raise ValidationError('%s is not valid time zone' % time_zone)
+
 
 class Profile(models.Model):
     utc = pytz.utc
