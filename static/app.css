@@ -55,3 +55,18 @@ body {
     color: #bfbfbf;
     text-shadow: 0 -1px 0 rgba(0, 0, 0,);
 }
+
+.status {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.status p {
+    font-size: 140%;
+    line-height: 140%;
+}
+
+.status small {
+    font-size: 130%;
+    line-height: 140%;
+}
