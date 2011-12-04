@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Hello!
+{% endblock %}
+
+{% block content %}
+    <h1>Homepage</h1>
+    <ul class="unstyled">
+        {% for status in statuses %}
+            <li class="status" data-isodate="{{ status.pub_date|date:"c" }}">
+                <blockquote>
+                    <p>{{ status.text }}</p>
+                    <small>tweeted by <strong>{{ status.author }}</strong> on
+                    <strong>{{ status.pub_date }}</strong></small>
+                </blockquote>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

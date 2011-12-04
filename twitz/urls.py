@@ -5,10 +5,9 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-homepage = TemplateView.as_view(template_name='homepage.html')
 
 urlpatterns = patterns('',
-    url(r'^$', homepage, name='homepage'),
+    url(r'^$', 'statuses.views.timeline', name='timeline'),
     url(r'^settings/$', 'accounts.views.settings', name='settings'),
     url(r'^admin/', include(admin.site.urls)),
 )

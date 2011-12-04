@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'accounts',
+    'statuses',
 )
 
 # Users settings
@@ -152,5 +153,3 @@ LOGGING = {
         },
     }
 }
-
-DATETIME_FORMAT = 'fasdfasd'

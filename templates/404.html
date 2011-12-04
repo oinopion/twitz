@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load url from future %}
+
 {% block title %}
     Page not found!
 {% endblock %}
@@ -9,6 +9,6 @@
     <h1>Sorry, not found!</h1>
     <p>
         Page you were looking for was not found. Please, take a look at
-        our <a href="{% url 'homepage' %}">home page</a>.
+        our <a href="/">home page</a>.
     </p>
 {% endblock %}
