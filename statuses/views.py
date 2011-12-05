@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.views.generic import ListView, CreateView, DetailView
@@ -41,6 +42,7 @@ class UserView(DetailView):
         user = self.object
         context['statuses'] = user.status_set.timeline()[:20]
         context['same_user'] = user == self.request.user
+        context['observed_tz'] = user.profile.time_zone or settings.TIME_ZONE
         return context
 
 

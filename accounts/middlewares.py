@@ -12,7 +12,6 @@ class TimeZoneMiddleware:
             try:
                 timezone.activate(request.user.profile.time_zone)
             except (UnknownTimeZoneError, ValueError) as e:
-                # remember to configure logging
                 logger.warn("Error setting time zone: %s", e)
             except Profile.DoesNotExist:
-                pass
+                logger.error("No profile for user: %s", request.user.pk)

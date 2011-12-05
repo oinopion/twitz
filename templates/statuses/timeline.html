@@ -2,7 +2,7 @@
 {% load url from future %}
 
 {% block title %}
-    Hello!
+    Hello{% if user.is_authenticated %} {{user.username}}{% endif %}!
 {% endblock %}
 
 {% block content %}
