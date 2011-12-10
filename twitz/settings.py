@@ -100,7 +100,7 @@ MIDDLEWARE_CLASSES = (
     'accounts.middlewares.TimeZoneMiddleware',
     )
 
-INTERNAL_IPS = ('127.0.0.1',)
+#INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'twitz.urls'
 
@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django_jenkins',
     'widget_tweaks',
     'debug_toolbar',
     'accounts',
