@@ -126,6 +126,11 @@ INSTALLED_APPS = (
     'statuses',
 )
 
+PROJECT_APPS = (
+    'accounts',
+    'statuses',
+)
+
 # Users settings
 AUTH_PROFILE_MODULE = 'accounts.Profile'
 LOGIN_URL = '/login/'
