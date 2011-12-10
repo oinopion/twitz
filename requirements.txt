@@ -1,5 +1,5 @@
--e git://github.com/django/django@b8b15fa09cd9d78c653396c3753dee0ebe729836#egg=Django-dev
--e git://github.com/django-debug-toolbar/django-debug-toolbar.git@b8ea435dd3fc2af702c17b8de93d870d4988e81f#egg=django_debug_toolbar-dev
+-e git://github.com/django/django#egg=Django-dev
+-e git://github.com/django-debug-toolbar/django-debug-toolbar.git#egg=django_debug_toolbar-dev
 django-jenkins==0.11.1
 django-widget-tweaks==0.3
 ipython==0.11
